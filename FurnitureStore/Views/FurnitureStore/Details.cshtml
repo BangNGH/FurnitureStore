@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<style>
+    
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top:30px;
+        margin-bottom:30px;
+    }
+
+    .image-container {
+        width: 40%;
+        border-left: dotted 1px;
+        border-color: azure;
+        margin-right: 20px;
+    }
+
+        .image-container img {
+            width: 100%;
+        }
+
+    .details-container {
+        width: 60%;
+    }
+
+    h4 {
+        font-weight: bold;
+        color: red;
+        margin-bottom: 10px;
+    }
+
+    p {
+        text-align: justify;
+        margin-bottom: 10px;
+    }
+
+    span.price {
+        color: red;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .btn-success {
+        background-color: green;
+        color: white;
+        border-radius: 5px;
+        padding: 10px 20px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+</style>
+<div class="container">
+    <div class="image-container">
+        <img alt="@Model.name" src="~/Content/image/@Model.Image" style="width:100%;" />
+
+    </div>
+    <div class="details-container">
+        <h4>Product: @Model.name</h4>
+        <h4>Manufacturer: @Model.manufacturer</h4>
+        <p><span style="font-weight:bold">Mô tả:</span> @Model.description</p>
+        <p>Giá bán: <span class="price">@Model.price.ToString("N0") đ VNĐ</span></p>
+        <div>
+           @* @Html.ActionLink("Thêm vào giỏ hàng", "AddToCart", "ShoppingCart", new { id = Model.Id }, new { @class = "btn btn-success" })*@
+        </div>
+    </div>
+</div>
+

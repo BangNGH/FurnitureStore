@@ -1,0 +1,38 @@
+﻿@model IEnumerable<FurnitureStore.Models.Product>
+@{
+    ViewBag.Title = "GetByCategoryId";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+<section class="brand_section">
+    <div class="container">
+        <div class="heading_container">
+            <h2>
+                Tất Cả Sản Phẩm Loại @ViewBag.CategoryName
+            </h2>
+        </div>
+        <div class="brand_container layout_padding2">
+            @foreach (var item in Model)
+            {
+                <div class="box">
+                    <a href="@Url.Action("Details", "FurnitureStore", new { id = @item.id })">
+                        <div class="new">
+                            <h5>View</h5>
+                        </div>
+                        <div class="img-box">
+                            <img src="~/Content/image/@item.Image" width="320" height="250">
+                        </div>
+                        <div class="detail-box">
+                            <h6 class="price" style="margin:10px">@item.price.ToString("N0") đ</h6>
+                            <h6>@item.name</h6>
+                        </div>
+                    </a>
+                </div>
+            }
+
+
+        </div>
+        <a href="" class="brand-btn">
+            See More
+        </a>
+    </div>
+</section>
