@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model FurnitureStore.ViewModels.ProductViewModel
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -30,13 +31,12 @@
 </head>
 
 <body>
-
     <div class="hero_area">
         <!-- header section strats -->
         <header class="header_section">
             <div class="container-fluid">
                 <nav class="navbar navbar-expand-lg custom_nav-container">
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href=" @Url.Action("Index", "FurnitureStore")">
                         <img src="~/Content/image/logo.png" alt="" />
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -53,7 +53,7 @@
                                 <a class="nav-link" href="about.html"> About</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="shop.html">Shop </a>
+                                @Html.ActionLink("Shop", "SeeAll", null, new { @class = "nav-link" })
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="furniture.html"> Furniture </a>
@@ -61,7 +61,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="contact.html">Contact us</a>
                             </li>
-                           
+
                         </ul>
                         <div class="user_option">
                             <a href="">
@@ -122,39 +122,9 @@
                         <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
                     </ol>
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="detail-box">
-                                        <h1>
-                                            The Latest
-                                            <span>
-                                                Furniture
-                                            </span>
-                                        </h1>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                                            do eiusmod tempor incididunt ut labore
-                                        </p>
-                                        <div class="btn-box">
-                                            <a href="" class="btn-1">
-                                                Read More
-                                            </a>
-                                            <a href="" class="btn-2">
-                                                Contact us
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 img-container">
-                                    <div class="img-box">
-                                        <img src="~/Content/image/slider-img.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-@*                            <div class="carousel-item ">
+                        @foreach (var item in Model.Products)
+                        {
+                            <div class="carousel-item @if (item == Model.Products.First()) { <text>active</text> }">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="detail-box">
@@ -183,76 +153,78 @@
                                             <img src="~/Content/image/@item.Image" alt="">
                                         </div>
                                     </div>
-                                </div>*@
+                                </div>
                             </div>
-                        
-                                                    <div class="carousel-item ">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="detail-box">
-                            <h1>
-                                The Latest
-                                <span>
-                                    Furniture
-                                </span>
-                            </h1>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                                do eiusmod tempor incididunt ut labore
-                            </p>
-                            <div class="btn-box">
-                                <a href="" class="btn-1">
-                                    Read More
-                                </a>
-                                <a href="" class="btn-2">
-                                    Contact us
-                                </a>
+                        }
+                    </div>
+
+              @*      <div class="carousel-item ">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="detail-box">
+                                    <h1>
+                                        The Latest
+                                        <span>
+                                            Furniture
+                                        </span>
+                                    </h1>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                        do eiusmod tempor incididunt ut labore
+                                    </p>
+                                    <div class="btn-box">
+                                        <a href="" class="btn-1">
+                                            Read More
+                                        </a>
+                                        <a href="" class="btn-2">
+                                            Contact us
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 img-container">
-                        <div class="img-box">
-                            <img src="~/Content/image/slider-img.png" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item ">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="detail-box">
-                            <h1>
-                                The Latest
-                                <span>
-                                    Furniture
-                                </span>
-                            </h1>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                                do eiusmod tempor incididunt ut labore
-                            </p>
-                            <div class="btn-box">
-                                <a href="" class="btn-1">
-                                    Read More
-                                </a>
-                                <a href="" class="btn-2">
-                                    Contact us
-                                </a>
+                            <div class="col-md-6 img-container">
+                                <div class="img-box">
+                                    <img src="~/Content/image/slider-img.png" alt="">
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 img-container">
-                        <div class="img-box">
-                            <img src="~/Content/image/slider-img.png" alt="">
+                    <div class="carousel-item ">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="detail-box">
+                                    <h1>
+                                        The Latest
+                                        <span>
+                                            Furniture
+                                        </span>
+                                    </h1>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                                        do eiusmod tempor incididunt ut labore
+                                    </p>
+                                    <div class="btn-box">
+                                        <a href="" class="btn-1">
+                                            Read More
+                                        </a>
+                                        <a href="" class="btn-2">
+                                            Contact us
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 img-container">
+                                <div class="img-box">
+                                    <img src="~/Content/image/slider-img.png" alt="">
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </div>*@
                 </div>
             </div>
-                        </div>
-                </div>
-            </div>
-        </section>
-        <!-- end slider section -->
+    </div>
+    </section>
+    <!-- end slider section -->
     </div>
 
     <div>

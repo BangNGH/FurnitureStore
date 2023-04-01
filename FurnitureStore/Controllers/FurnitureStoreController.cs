@@ -43,7 +43,12 @@ namespace FurnitureStore.Controllers
             var products = context.Products.Where(p => p.category_id == id).ToList();
             var category = context.ProductCategories.Find(id);
             ViewBag.CategoryName = category.name;
-            return View(products);
+            return View("SeeAll", products);
+        }
+
+        public ActionResult SeeAll()
+        {
+            return View(context.Products.ToList());
         }
 
     }

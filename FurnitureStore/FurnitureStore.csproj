@@ -2191,6 +2191,7 @@
     <Content Include="Views\FurnitureStore\Details.cshtml" />
     <Content Include="Views\FurnitureStore\Index.cshtml" />
     <Content Include="Views\FurnitureStore\GetByCategoryId.cshtml" />
+    <Content Include="Views\FurnitureStore\SeeAll.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
