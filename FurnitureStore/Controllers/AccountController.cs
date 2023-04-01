@@ -73,6 +73,17 @@ namespace FurnitureStore.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var user = await UserManager.FindAsync(model.Email, model.Password);
+
+            if (user != null)
+            {
+                var roles = await UserManager.GetRolesAsync(user.Id);
+
+                if (roles.Contains("Admin"))
+                {
+                    return RedirectToAction("Index", "Products", new { area = "Admin" });
+                }
+            }
             switch (result)
             {
                 case SignInStatus.Success:
@@ -87,6 +98,49 @@ namespace FurnitureStore.Controllers
                     return View(model);
             }
         }
+
+
+        /*   [HttpPost]
+           [AllowAnonymous]
+           [ValidateAntiForgeryToken]
+           public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+           {
+               if (!ModelState.IsValid)
+               {
+                   return View(model);
+               }
+
+               var user = await UserManager.FindAsync(model.Email, model.Password);
+
+               if (user != null)
+               {
+                   var roles = await UserManager.GetRolesAsync(user.Id);
+
+                   if (roles.Contains("Admin"))
+                   {
+                       *//* return RedirectToAction("Index", "Products", new { area = "Admin" });*//*
+                       return Redirect("/Admin");
+                   }
+               }
+
+               // This doesn't count login failures towards account lockout
+               // To enable password failures to trigger account lockout, change to shouldLockout: true
+               var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+
+               switch (result)
+               {
+                   case SignInStatus.Success:
+                       return RedirectToLocal(returnUrl);
+                   case SignInStatus.LockedOut:
+                       return View("Lockout");
+                   case SignInStatus.RequiresVerification:
+                       return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                   case SignInStatus.Failure:
+                   default:
+                       ModelState.AddModelError("", "Invalid login attempt.");
+                       return View(model);
+               }
+           }*/
 
         //
         // GET: /Account/VerifyCode

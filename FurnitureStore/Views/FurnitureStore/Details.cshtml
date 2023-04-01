@@ -1,73 +1,106 @@
-﻿
+﻿@model FurnitureStore.ViewModels.ProductViewModel
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
+@*
+    <style>
 
-<style>
-    
-    .container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top:30px;
-        margin-bottom:30px;
-    }
-
-    .image-container {
-        width: 40%;
-        border-left: dotted 1px;
-        border-color: azure;
-        margin-right: 20px;
-    }
-
-        .image-container img {
-            width: 100%;
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
         }
 
-    .details-container {
-        width: 60%;
-    }
+        .image-container {
+            width: 40%;
+            border-left: dotted 1px;
+            border-color: azure;
+            margin-right: 20px;
+        }
 
-    h4 {
-        font-weight: bold;
-        color: red;
-        margin-bottom: 10px;
-    }
+            .image-container img {
+                width: 100%;
+            }
 
-    p {
-        text-align: justify;
-        margin-bottom: 10px;
-    }
+        .details-container {
+            width: 60%;
+        }
 
-    span.price {
-        color: red;
-        font-size: 16px;
-        font-weight: bold;
-    }
+        h4 {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
 
-    .btn-success {
-        background-color: green;
-        color: white;
-        border-radius: 5px;
-        padding: 10px 20px;
-        text-decoration: none;
-        font-weight: bold;
-    }
-</style>
-<div class="container">
+        p {
+            text-align: justify;
+            margin-bottom: 10px;
+        }
+
+        span.price {
+            color: red;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .btn-success {
+            background-color: green;
+            color: white;
+            border-radius: 5px;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .btn-primary {
+            background-color: #1fd778;
+            border-color: #1fd778;
+        }
+
+    </style>*@
+
+<!--<div class="container">
     <div class="image-container">
-        <img alt="@Model.name" src="~/Content/image/@Model.Image" style="width:100%;" />
+        <img alt="@Model.Products.FirstOrDefault().name" src="~/Content/image/@Model.Products.FirstOrDefault().Image" style="width:100%;" />
 
     </div>
     <div class="details-container">
-        <h4>Product: @Model.name</h4>
-        <h4>Manufacturer: @Model.manufacturer</h4>
-        <p><span style="font-weight:bold">Mô tả:</span> @Model.description</p>
-        <p>Giá bán: <span class="price">@Model.price.ToString("N0") đ VNĐ</span></p>
-        <div>
-           @* @Html.ActionLink("Thêm vào giỏ hàng", "AddToCart", "ShoppingCart", new { id = Model.Id }, new { @class = "btn btn-success" })*@
+
+        <h4> <span style="color: red;">Product:</span>  @Model.Products.FirstOrDefault().name</h4>
+        <h4>Manufacturer: @Model.Products.FirstOrDefault().manufacturer</h4>
+        <p><span style="font-weight:bold">Mô tả:</span> @Model.Products.FirstOrDefault().description</p>
+        <p><span style="font-size: 1.875rem; font-weight: 500; " class="price">@Model.Products.FirstOrDefault().price.ToString("N0") đ</span></p>
+        <div>-->
+@* @Html.ActionLink("Thêm vào giỏ hàng", "AddToCart", "ShoppingCart", new { id = Model.Id }, new { @class = "btn btn-success" })*@
+<!--</div>
+        @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-primary" })
+
+    </div>
+</div>-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 image-container">
+            <img alt="@Model.Products.FirstOrDefault().name" src="~/Content/image/@Model.Products.FirstOrDefault().Image" class="img-fluid" />
+        </div>
+        <div class="col-md-6 details-container">
+            <h4 class="mb-3"><span class="text-danger">Product:</span> @Model.Products.FirstOrDefault().name</h4>
+            <h4 class="mb-3">Manufacturer: @Model.Products.FirstOrDefault().manufacturer</h4>
+            <p class="mb-3"><strong>Mô tả:</strong> @Model.Products.FirstOrDefault().description</p>
+            <p class="mb-3"><span class="text-danger price">@Model.Products.FirstOrDefault().price.ToString("N0") đ</span></p>
+            <div class="mb-3">
+                @* @Html.ActionLink("Thêm vào giỏ hàng", "AddToCart", "ShoppingCart", new { id = Model.Id }, new { @class = "btn btn-success" })*@
+            </div>
+            @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-primary" })
         </div>
     </div>
 </div>
 
+<style>
+    .details-container, .image-container {
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
+
+</style>

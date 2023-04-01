@@ -1,6 +1,6 @@
-﻿@model IEnumerable<FurnitureStore.Models.Product>
+﻿@model FurnitureStore.ViewModels.ProductViewModel
 @{
-    ViewBag.Title = "SeeAll";
+    ViewBag.Title = "Get All Products";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
 
@@ -17,7 +17,7 @@
             }
         </div>
         <div class="brand_container layout_padding2">
-            @foreach (var item in Model)
+            @foreach (var item in Model.Products)
             {
                 <div class="box">
                     <a href="@Url.Action("Details", "FurnitureStore", new { id = @item.id })">
@@ -40,11 +40,9 @@
         @Html.ActionLink("Back", "Index", null, new { @class = "brand-btn", style = "color: white; margin-right:20px" })
         @if (ViewBag.CategoryName != null)
         {
-            @Html.ActionLink("See All", "SeeAll", null, new { @class = "brand-btn" })
+            @Html.ActionLink("See All", "GetAllProducts", null, new { @class = "brand-btn" })
         }
 
 
     </div>
 </section>
-
-

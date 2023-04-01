@@ -3,6 +3,8 @@
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
+
+
 <section class="about_section layout_padding">
     <div class="container">
         <div class="row">
@@ -17,9 +19,7 @@
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
                         dolore magna aliqua. Ut enim ad minim veniam
                     </p>
-                    <a href="~/Views/FurnitureStore/about.html">
-                        Read More
-                    </a>
+                   @Html.ActionLink("Read More", "AboutMe")
                 </div>
             </div>
             <div class="col-md-6">
@@ -60,7 +60,6 @@
                                         <h5 class="t-name">
                                             <a href="@Url.Action("GetByCategoryId", "FurnitureStore", new { id = item.id })">@item.name</a>
                                         </h5>
-                                       @* <button data-user-id="@item.id" class="btn btn-default btn-sm tt-name">@item.name</button>*@
                                     </div>
                                 </div>
                                 i++;
@@ -161,8 +160,7 @@
 
 
         </div>
-        @Html.ActionLink("See All", "SeeAll", null, new { @class = "brand-btn" })
-    </div>
+        @Html.ActionLink("See All", "GetAllProducts", null, new { @class = "brand-btn" })
     </div>
 </section>
 }

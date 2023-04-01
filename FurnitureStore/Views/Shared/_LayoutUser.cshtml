@@ -50,16 +50,16 @@
                                 <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="about.html"> About</a>
+                                <a class="nav-link" href="@Url.Action("AboutMe", "FurnitureStore")"> About</a>
                             </li>
                             <li class="nav-item">
-                                @Html.ActionLink("Shop", "SeeAll", null, new { @class = "nav-link" })
+                                @Html.ActionLink("Shop", "GetAllProducts", null, new { @class = "nav-link" })
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="furniture.html"> Furniture </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="contact.html">Contact us</a>
+                                @Html.ActionLink("Contact Us", "ContactUs", null, new { @class = "nav-link" })
                             </li>
 
                         </ul>
@@ -139,12 +139,8 @@
                                                 do eiusmod tempor incididunt ut labore
                                             </p>
                                             <div class="btn-box">
-                                                <a href="" class="btn-1">
-                                                    Read More
-                                                </a>
-                                                <a href="" class="btn-2">
-                                                    Contact us
-                                                </a>
+                                                @Html.ActionLink("Read More", "AboutMe", null, new { @class = "btn-1" })
+                                                @Html.ActionLink("Contact Us", "ContactUs", null, new { @class = "btn-2" })
                                             </div>
                                         </div>
                                     </div>

@@ -1,0 +1,110 @@
+﻿@model FurnitureStore.ViewModels.ProductViewModel
+@{
+    ViewBag.Title = "AboutMe";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+
+
+<!-- about section -->
+<style>
+    .about_section {
+        background-color: #f7f7f7;
+        padding: 60px 0;
+    }
+
+    .detail-box {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin-bottom: 30px;
+    }
+
+    .heading_container h2 {
+        font-size: 36px;
+        font-weight: bold;
+        color: #1fd778;
+        margin-bottom: 20px;
+    }
+
+    .detail-box h3 {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .detail-box h4 {
+        font-size: 20px;
+        font-weight: 500;
+        color: #777;
+        margin-bottom: 20px;
+    }
+
+    .detail-box ul {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 30px;
+    }
+
+        .detail-box ul li {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+    .detail-box a {
+        display: inline-block;
+        background-color: #1fd778;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 500;
+        text-transform: uppercase;
+        padding: 15px 30px;
+        border-radius: 50px;
+        transition: all 0.3s ease-in-out;
+    }
+
+        .detail-box a:hover {
+            background-color: #111;
+        }
+
+</style>
+<section class="about_section layout_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="detail-box">
+                    <div class="heading_container">
+                        <h2>
+                            About Us
+                        </h2>
+                    </div>
+                    <h3>
+                        ĐỒ ÁN WEBSITE BÁN ĐỒ NỘI THẤT
+                    </h3>
+                    <h4>
+                        Sinh viên thực hiện
+                    </h4>
+                    <ul>
+                        <li>Nguyễn Hữu Bằng</li>
+                        <li>Nguyễn Khắc Lộc</li>
+                        <li>Nguyễn Trần Kim Dung</li>
+                        <li>Đoàn Thị Thanh Nga</li>
+                    </ul>
+                    <a href="">
+                        Read More
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="img-box">
+                    <img src="~/Content/image/about-img.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- end about section -->

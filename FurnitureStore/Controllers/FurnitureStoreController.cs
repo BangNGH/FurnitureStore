@@ -14,7 +14,7 @@ namespace FurnitureStore.Controllers
         {
             return context.Products.OrderByDescending(z => z.id).Take(count).ToList();
         }
-        public List<ProductCategory> GetNewCategory(int count)
+        public IEnumerable<ProductCategory> GetNewCategory(int count)
         {
             return context.ProductCategories.OrderByDescending(z => z.id).Take(count).ToList();
         }
@@ -32,24 +32,58 @@ namespace FurnitureStore.Controllers
 
         public ActionResult Details(int id)
         {
-            var firstBook = context.Products.FirstOrDefault(p => p.id == id);
-            if (firstBook == null)
+            var detailsBook = context.Products.Where(p => p.id == id).ToList();
+            if (detailsBook == null)
                 return HttpNotFound("Không tìm thấy mã sách này!");
-            return View(firstBook);
+            var viewModel = new ProductViewModel
+            {
+                Products = detailsBook
+            };
+            return View(viewModel);
         }
 
         public ActionResult GetByCategoryId(int id)
         {
             var products = context.Products.Where(p => p.category_id == id).ToList();
             var category = context.ProductCategories.Find(id);
+            var viewModel = new ProductViewModel
+            {
+                Products = products
+            };
             ViewBag.CategoryName = category.name;
-            return View("SeeAll", products);
+            return View("GetAllProducts", viewModel);
         }
 
-        public ActionResult SeeAll()
+        public ActionResult GetAllProducts()
         {
-            return View(context.Products.ToList());
+            var products = context.Products.ToList();
+            var viewModel = new ProductViewModel
+            {
+                Products = products
+            };
+
+            return View(viewModel);
         }
+
+        public ActionResult AboutMe()
+        {
+            var products = context.Products.ToList();
+            var viewModel = new ProductViewModel
+            {
+                Products = products
+            };
+            return View(viewModel);
+        }
+        public ActionResult ContactUs()
+        {
+            var products = context.Products.ToList();
+            var viewModel = new ProductViewModel
+            {
+                Products = products
+            };
+            return View(viewModel);
+        }
+
 
     }
 }
