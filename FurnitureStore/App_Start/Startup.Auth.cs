@@ -1,11 +1,11 @@
-﻿using System;
+﻿using FurnitureStore.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using FurnitureStore.Models;
+using System;
 
 namespace FurnitureStore
 {
@@ -34,7 +34,7 @@ namespace FurnitureStore
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
@@ -54,15 +54,15 @@ namespace FurnitureStore
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "607056611286098",
+               appSecret: "c8dc5c8b9bdb0d14290ecbd3ad6af227");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "40975869731-fqi5f7pp1tfv9ua6bctd1cntkais66vl.apps.googleusercontent.com",
+                ClientSecret = "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"
+            });
         }
     }
 }
