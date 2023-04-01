@@ -2,7 +2,7 @@
 
 ## Task
 ### Client Area:
-+ Login with username
++ Login with username + load hello username in loginpartial
 + complete cart - order
 + Testimonial
 + Subcribe in footer
