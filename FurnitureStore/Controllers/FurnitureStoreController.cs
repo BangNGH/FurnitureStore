@@ -84,6 +84,18 @@ namespace FurnitureStore.Controllers
             return View(viewModel);
         }
 
-
+        public ActionResult Search(string searchString)
+        {
+            var rs = (from m in context.Products where m.name.Contains(searchString) select m);
+            var viewModel = new ProductViewModel
+            {
+                Products = rs
+            };
+            if (rs.Count() > 0)
+            {
+                return View("GetAllProducts", viewModel);
+            }
+            return HttpNotFound("Not found product!");
+        }
     }
 }

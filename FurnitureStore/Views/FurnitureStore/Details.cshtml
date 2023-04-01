@@ -3,81 +3,7 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
-@*
-    <style>
 
-        .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 30px;
-            margin-bottom: 30px;
-        }
-
-        .image-container {
-            width: 40%;
-            border-left: dotted 1px;
-            border-color: azure;
-            margin-right: 20px;
-        }
-
-            .image-container img {
-                width: 100%;
-            }
-
-        .details-container {
-            width: 60%;
-        }
-
-        h4 {
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        p {
-            text-align: justify;
-            margin-bottom: 10px;
-        }
-
-        span.price {
-            color: red;
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .btn-success {
-            background-color: green;
-            color: white;
-            border-radius: 5px;
-            padding: 10px 20px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .btn-primary {
-            background-color: #1fd778;
-            border-color: #1fd778;
-        }
-
-    </style>*@
-
-<!--<div class="container">
-    <div class="image-container">
-        <img alt="@Model.Products.FirstOrDefault().name" src="~/Content/image/@Model.Products.FirstOrDefault().Image" style="width:100%;" />
-
-    </div>
-    <div class="details-container">
-
-        <h4> <span style="color: red;">Product:</span>  @Model.Products.FirstOrDefault().name</h4>
-        <h4>Manufacturer: @Model.Products.FirstOrDefault().manufacturer</h4>
-        <p><span style="font-weight:bold">Mô tả:</span> @Model.Products.FirstOrDefault().description</p>
-        <p><span style="font-size: 1.875rem; font-weight: 500; " class="price">@Model.Products.FirstOrDefault().price.ToString("N0") đ</span></p>
-        <div>-->
-@* @Html.ActionLink("Thêm vào giỏ hàng", "AddToCart", "ShoppingCart", new { id = Model.Id }, new { @class = "btn btn-success" })*@
-<!--</div>
-        @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-primary" })
-
-    </div>
-</div>-->
 <div class="container">
     <div class="row">
         <div class="col-md-6 image-container">
@@ -89,7 +15,7 @@
             <p class="mb-3"><strong>Mô tả:</strong> @Model.Products.FirstOrDefault().description</p>
             <p class="mb-3"><span class="text-danger price">@Model.Products.FirstOrDefault().price.ToString("N0") đ</span></p>
             <div class="mb-3">
-                @* @Html.ActionLink("Thêm vào giỏ hàng", "AddToCart", "ShoppingCart", new { id = Model.Id }, new { @class = "btn btn-success" })*@
+                 @Html.ActionLink("Thêm vào giỏ hàng", "AddToCart", "ShoppingCart", new { id = @Model.Products.FirstOrDefault().id }, new { @class = "btn btn-success" })
             </div>
             @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-primary" })
         </div>

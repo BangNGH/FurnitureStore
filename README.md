@@ -2,6 +2,8 @@
 
 ## Task
 ### Client Area:
++ Login with username
++ complete cart - order
 + Testimonial
 + Subcribe in footer
 + Google map api

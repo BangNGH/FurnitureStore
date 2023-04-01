@@ -7,6 +7,7 @@ namespace FurnitureStore.ViewModels
     {
         public IEnumerable<Product> Products { get; set; }
         public IEnumerable<ProductCategory> Categories { get; set; }
+        public IEnumerable<CartItem> CartItems { get; set; }
 
     }
 }

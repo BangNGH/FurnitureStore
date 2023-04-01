@@ -16,6 +16,15 @@
                 <h2>Our Products</h2>
             }
         </div>
+            @using (Html.BeginForm("Search", "FurnitureStore", FormMethod.Get))
+            {
+                <div style="margin:50px;">
+                    <input type="text" id="search" name="searchString" placeholder="Tìm kiếm" style="padding: 8px; background: #eee; border-radius: 4px 0 0 4px; border: none; outline: none;">
+                    <button style="background-color: #24d278; color: #fff; padding: 8px 16px; border-radius: 0 4px 4px 0; border: none; cursor: pointer;">Tìm kiếm</button>
+                </div>
+
+            }
+
         <div class="brand_container layout_padding2">
             @foreach (var item in Model.Products)
             {

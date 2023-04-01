@@ -192,10 +192,12 @@
     <Compile Include="Controllers\FurnitureStoreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\FurnitureDB.cs" />
@@ -2193,6 +2195,8 @@
     <Content Include="Views\FurnitureStore\GetAllProducts.cshtml" />
     <Content Include="Views\FurnitureStore\AboutMe.cshtml" />
     <Content Include="Views\FurnitureStore\ContactUs.cshtml" />
+    <Content Include="Views\ShoppingCart\Index.cshtml" />
+    <Content Include="Views\ShoppingCart\CartSummary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
