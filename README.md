@@ -3,6 +3,7 @@
 ## Task
 ### Client Area:
 + Login with username + load hello username in loginpartial
++ Give Feedback (contact us)
 + complete cart - order
 + Testimonial
 + Subcribe in footer
@@ -17,3 +18,5 @@
 + Search
 + API request
 + See Profile Admin
++ Table management order (allow admin mark order ispaid?)
++ Table Feedback
