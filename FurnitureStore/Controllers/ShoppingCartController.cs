@@ -1,6 +1,7 @@
 ﻿using FurnitureStore.Models;
 using FurnitureStore.ViewModels;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -103,6 +104,7 @@ namespace FurnitureStore.Controllers
 
         public ActionResult Order(string delivery_address, decimal shippingCost)
         {
+            FurnitureDB context = new FurnitureDB();
             string currentUserId = User.Identity.GetUserId();
             int newOrderNo;
             using (DbContextTransaction transaction = context.Database.BeginTransaction())
@@ -115,12 +117,12 @@ namespace FurnitureStore.Controllers
                         DeliveryDate = null,
                         isComplete = false,
                         isPaid = false,
-                        customer_id = currentUserId
+                        customer_id = currentUserId,
                     };
                     context.Invoices.Add(objInvoices);
                     context.SaveChanges();
-                    newOrderNo = context.Database.SqlQuery<int>("SELECT TOP 1 id FROM [Invoices] ORDER BY id DESC").FirstOrDefault();
-
+                    newOrderNo = objInvoices.id;
+                    TempData["OrderNo"] = newOrderNo;
                     List<CartItem> carts = GetShoppingCartFromSession();
                     foreach (var item in carts)
                     {
@@ -132,7 +134,7 @@ namespace FurnitureStore.Controllers
                             quantity = item.Quatity,
                             price = item.Price,
                             //Total là phí ship của đơn hàng dô đặt nhằm tên trường
-                            Total = shippingCost
+                            shipping_cost = shippingCost
 
                         };
                         context.InvoiceDetails.Add(invoiceDetail);
@@ -146,14 +148,93 @@ namespace FurnitureStore.Controllers
                     return Content("Order Placement Error!" + e.Message);
                 }
             }
-            return RedirectToAction("ConfirmOrder", "ShoppingCart", new { newOrderNo = newOrderNo });
+            return RedirectToAction("ConfirmOrder", "ShoppingCart", new { newOrderNo = newOrderNo, shippingCost = shippingCost });
 
         }
-        public ActionResult ConfirmOrder(int newOrderNo)
+        public ActionResult ConfirmOrder(int newOrderNo, decimal shippingCost)
         {
 
-            ViewBag.newOrderNo = newOrderNo.ToString();
+            ViewBag.newOrderNo = newOrderNo;
+            ViewBag.shippingCost = shippingCost.ToString();
             return View();
         }
+
+        public ActionResult Payment(int id, decimal shippingCost)
+        {
+            List<CartItem> lstShoppingCart = GetShoppingCartFromSession();
+            //request params need to request to MoMo system
+            string endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
+            string partnerCode = "MOMOOJOI20210710";
+            string accessKey = "iPXneGmrJH0G8FOP";
+            string serectkey = "sFcbSGRSJjwGxwhhcEktCHWYUuTuPNDB";
+            string orderInfo = "test";
+            string returnUrl = "https://ebc9-115-73-216-91.ap.ngrok.io/ShoppingCart/ConfirmPaymentClient";
+            string notifyurl = "https://ebc9-115-73-216-91.ap.ngrok.io/ShoppingCart/ConfirmPaymentClient";
+            decimal price = lstShoppingCart.Sum(x => x.Price * x.Quatity);
+            string amount = ((long)(price + shippingCost)).ToString();
+            string orderid = DateTime.Now.ToString("yyyyMMddHHmmss") + new Random().Next(1000, 9999).ToString();
+
+            string requestId = DateTime.Now.Ticks.ToString();
+            string extraData = "";
+
+            //Before sign HMAC SHA256 signature
+            string rawHash = "partnerCode=" +
+                partnerCode + "&accessKey=" +
+                accessKey + "&requestId=" +
+                requestId + "&amount=" +
+                amount + "&orderId=" +
+                orderid + "&orderInfo=" +
+                orderInfo + "&returnUrl=" +
+                returnUrl + "&notifyUrl=" +
+                notifyurl + "&extraData=" +
+                extraData;
+
+            MoMoSecurity crypto = new MoMoSecurity();
+            //sign signature SHA256
+            string signature = crypto.signSHA256(rawHash, serectkey);
+
+            //build body json request
+            JObject message = new JObject
+                                      {
+                                          { "partnerCode", partnerCode },
+                                          { "accessKey", accessKey },
+                                          { "requestId", requestId },
+                                          { "amount", amount },
+                                          { "orderId", orderid },
+                                          { "orderInfo", orderInfo },
+                                          { "returnUrl", returnUrl },
+                                          { "notifyUrl", notifyurl },
+                                          { "extraData", extraData },
+                                          { "requestType", "captureMoMoWallet" },
+                                          { "signature", signature }
+
+                                      };
+
+            string responseFromMomo = PaymentRequest.sendPaymentRequest(endpoint, message.ToString());
+
+            JObject jmessage = JObject.Parse(responseFromMomo);
+
+            return Redirect(jmessage.GetValue("payUrl").ToString());
+        }
+
+        public ActionResult ConfirmPaymentClient(Models.Result result)
+        {
+            //lấy kết quả Momo trả về và hiển thị thông báo cho người dùng (có thể lấy dữ liệu ở đây cập nhật xuống db)
+            string rMessage = result.message;
+            string rOrderId = result.orderId;
+            string rErrorCode = result.errorCode; // = 0: thanh toán thành công
+            Invoice order = new Invoice();
+            int orderNo = (int)TempData["OrderNo"];
+            order = context.Invoices.FirstOrDefault(p => p.id == orderNo);
+            order.isPaid = true;
+            order.DeliveryDate = DateTime.Now.AddDays(10);
+            context.SaveChanges();
+            Session["ShoppingCart"] = null;
+            ViewBag.Message = rMessage;
+            ViewBag.OrderId = rOrderId;
+            ViewBag.ErrorCode = rErrorCode;
+            return View();
+        }
+
     }
 }

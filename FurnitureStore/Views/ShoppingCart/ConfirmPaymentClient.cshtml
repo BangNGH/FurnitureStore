@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "ConfirmOrder";
+    ViewBag.Title = "Confirm Payment";
 }
 
 <!DOCTYPE html>
@@ -34,15 +34,24 @@
                     </svg>
                 </div>
                 <div class="text-center">
-                    <h1>Verification!</h1>
-                    <p>Vui lòng thanh toán để xác nhận đơn hàng</p>
-                    @Html.ActionLink("Back Home", "Index", "FurnitureStore", null, new { @class = "btn btn-outline-success" })
-                    @Html.ActionLink("Thanh Toán MoMo", "Payment", "ShoppingCart", new { id = ViewBag.newOrderNo , shippingCost = ViewBag.shippingCost }, new { @class = "btn btn-outline-success momo" })
-
+                    <h1>Thank You !</h1>
+                    <p>Message: @ViewBag.Message</p>
+                    <p>Order ID: @ViewBag.OrderId</p>
+                    @if (ViewBag.ErrorCode == "0")
+                    {
+                        <p>Đặt hàng thành công! Đơn hàng sẽ được gửi đi trong vòng 7 ngày tới</p>
+                    }
+                    else
+                    {
+                        <p>Payment failed.</p>
+                    }
+                    <p>
+                        @Html.ActionLink("Back Home", "Index", "FurnitureStore", null, new { @class = "btn btn-outline-success" })
                 </div>
             </div>
         </div>
     </div>
 </body>
 </html>
+
 

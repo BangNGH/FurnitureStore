@@ -24,7 +24,7 @@ namespace FurnitureStore.Models
                 .HasPrecision(10, 2);
 
             modelBuilder.Entity<InvoiceDetail>()
-                .Property(e => e.Total)
+                .Property(e => e.shipping_cost)
                 .HasPrecision(10, 2);
 
             modelBuilder.Entity<ProductCategory>()

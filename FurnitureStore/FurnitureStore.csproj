@@ -184,6 +184,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\InvoiceDetailsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\InvoicesController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductCategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Admin\Filters\AdminAuthorizeAttribute.cs" />
@@ -203,8 +205,11 @@
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\InvoiceDetail.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MoMoSecurity.cs" />
+    <Compile Include="Models\PaymentRequest.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductCategory.cs" />
+    <Compile Include="Models\Result.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
@@ -2134,6 +2139,18 @@
     <Content Include="Areas\Admin\Views\ProductCategories\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\ProductCategories\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\Error.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoices\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoices\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoices\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoices\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Invoices\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\InvoiceDetails\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\InvoiceDetails\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\InvoiceDetails\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\InvoiceDetails\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\InvoiceDetails\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\InvoiceDetails\TotalRevenue.cshtml" />
+    <Content Include="Areas\Admin\Views\InvoiceDetails\BestSellingProducts.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Chart.bundle.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -2196,6 +2213,7 @@
     <Content Include="Views\ShoppingCart\Index.cshtml" />
     <Content Include="Views\ShoppingCart\CartSummary.cshtml" />
     <Content Include="Views\ShoppingCart\ConfirmOrder.cshtml" />
+    <Content Include="Views\ShoppingCart\ConfirmPaymentClient.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,51 @@
+﻿@model FurnitureStore.Models.InvoiceDetail
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/_AdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>InvoiceDetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.delivery_address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.delivery_address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.shipping_cost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.shipping_cost)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

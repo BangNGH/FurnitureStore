@@ -41,9 +41,10 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span>
+                    @Html.ActionLink("Dashboard", "TotalRevenue", "InvoiceDetails", null, new { @class = "collapse-item" })
                 </a>
             </li>
 
@@ -84,6 +85,8 @@
                         <h6 class="collapse-header">Management Funiture:</h6>
                         @Html.ActionLink("Category", "Index", "ProductCategories", null, new { @class = "collapse-item" })
                         @Html.ActionLink("Product", "Index", "Products", null, new { @class = "collapse-item" })
+                        @Html.ActionLink("Invoices", "Index", "Invoices", null, new { @class = "collapse-item" })
+                        @Html.ActionLink("Invoice Details", "Index", "InvoiceDetails", null, new { @class = "collapse-item" })
 
 
                     </div>

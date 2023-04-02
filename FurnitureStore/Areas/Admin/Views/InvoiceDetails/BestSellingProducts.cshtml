@@ -1,0 +1,29 @@
+﻿@using FurnitureStore.Models;
+@model List<Product>
+
+@{
+    ViewBag.Title = "BestSellingProducts";
+    Layout = "~/Views/_AdminLayout.cshtml";
+}
+
+
+<div class="container">
+    <h2>Best Selling Products</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity Sold</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.QuantitySold</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -24,6 +24,6 @@ namespace FurnitureStore.Models
 
         public decimal price { get; set; }
 
-        public decimal Total { get; set; }
+        public decimal shipping_cost { get; set; }
     }
 }
