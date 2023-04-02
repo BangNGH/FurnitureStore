@@ -9,7 +9,7 @@
             <div class="title">
                 <div class="row">
                     <div class="col"><h4><b>Shopping Cart</b></h4></div>
-                   
+
                 </div>
             </div>
             @foreach (var item in Model.CartItems)
@@ -26,8 +26,8 @@
                             {
                                 <div class="input-group">
                                     <input type="number" min="1" name="txtQuantity" value="@item.Quatity" class="form-control" style="height: 38px;width:50px" />
-                                    
-                                        <button type="submit" class="btn btn-primary">Update</button>
+
+                                    <button type="submit" class="btn btn-primary">Update</button>
 
                                 </div>
                             }
@@ -45,7 +45,7 @@
 
 
         </div>
-        <div class="col-md-4 summary">
+        @*  <div class="col-md-4 summary">
             <div><h5><b>Summary</b></h5></div>
             <hr>
             <div class="row">
@@ -54,7 +54,12 @@
             </div>
             <form>
                 <p>SHIPPING</p>
-                <select><option class="text-muted">Standard-Delivery - 100.000đ</option></select>
+                <select>
+                    <option class="text-muted">Standard-Delivery(≤5km) - 110.000đ</option>
+                    <option class="text-muted">Standard-Delivery(5-20km) - 170.000đ</option>
+                    <option class="text-muted">Standard-Delivery(≥20km) - 350.000đ</option>
+                    <option class="text-muted">Qucik-Delivery(20-50km)- 599.000đ</option>
+                </select>
                 <p>
                     Delivery address
                 </p>
@@ -65,7 +70,40 @@
                 <div class="col text-right">[Money+ShippingCost]</div>
             </div>
             <button class="btn">CHECKOUT</button>
+        </div>*@
+    <div class="col-md-4 summary">
+        <div><h5><b>Summary</b></h5></div>
+        <hr>
+        <div class="row">
+            <div class="col" style="padding-left:0;">@ViewBag.Quatity ITEMS</div>
+            <div class="col text-right">@ViewBag.Total.ToString("N0") đ</div>
         </div>
+        <form>
+            <p>SHIPPING</p>
+            <select onchange="setShippingCost(this.value)">
+                <option value="110000" class="text-muted">Standard-Delivery(≤5km) - 110.000đ</option>
+                <option value="170000" class="text-muted">Standard-Delivery(5-20km) - 170.000đ</option>
+                <option value="350000" class="text-muted">Standard-Delivery(≥20km) - 350.000đ</option>
+                <option value="599000" class="text-muted">Qucik-Delivery(20-50km)- 599.000đ</option>
+            </select>
+            <p>
+                Delivery address
+            </p>
+            <input id="code" placeholder="Enter address">
+        </form>
+        <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+            <div class="col">TOTAL PRICE</div>
+            <div class="col text-right">[@ViewBag.Total.ToString("N0") đ + <span id="shippingCost">0</span>đ]</div>
+        </div>
+        <button class="btn" id="checkout-btn" disabled>CHECKOUT</button>
+    </div>
+
+        <script>
+function setShippingCost(value) {
+  document.getElementById("shippingCost").innerHTML = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Format the value with commas as thousand separators
+}
+        </script>
+
     </div>
 
 </div>

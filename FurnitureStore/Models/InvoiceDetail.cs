@@ -22,6 +22,8 @@ namespace FurnitureStore.Models
 
         public decimal price { get; set; }
 
+        public decimal Total { get; set; }
+
         public virtual Invoice Invoice { get; set; }
 
         public virtual Product Product { get; set; }

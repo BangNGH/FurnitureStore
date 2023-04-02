@@ -68,7 +68,7 @@ namespace FurnitureStore.Controllers
             ViewBag.CartCount = GetShoppingCartFromSession().Count();
             return PartialView("CartSummary");
         }
-
+        [Authorize]
         public RedirectToRouteResult UpdateCart(int id, int txtQuantity)
         {
             var itemFind = GetShoppingCartFromSession().FirstOrDefault(m => m.Id == id);

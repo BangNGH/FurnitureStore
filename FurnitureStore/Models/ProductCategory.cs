@@ -1,7 +1,10 @@
 namespace FurnitureStore.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
     public partial class ProductCategory
     {
@@ -10,12 +13,11 @@ namespace FurnitureStore.Models
         {
             Products = new HashSet<Product>();
         }
-        [Display(Name = "Category Id")]
+
         public int id { get; set; }
 
         [Required]
         [StringLength(255)]
-        [Display(Name = "Product Category")]
         public string name { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

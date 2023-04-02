@@ -1,21 +1,6 @@
 CREATE DATABASE furniture_store;
 USE furniture_store;
 
-
-
-CREATE TABLE Customers (
-  id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-  name NVARCHAR(255) NOT NULL,
-  phone VARCHAR(20),
-  email VARCHAR(255)
-);
-
-CREATE TABLE Employees (
-  id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  phone VARCHAR(20),
-  email VARCHAR(255)
-);
 CREATE TABLE Products (
   id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
   name NVARCHAR(255) NOT NULL,
@@ -44,4 +29,4 @@ CREATE TABLE ProductCategories (
   name NVARCHAR(255) NOT NULL,
 );
 ALTER TABLE Products ADD category_id INT NOT NULL FOREIGN KEY REFERENCES ProductCategories(id);
-
+ALTER TABLE Invoices ADD customer_id nvarchar(128) NOT NULL FOREIGN KEY REFERENCES AspNetUsers(Id);

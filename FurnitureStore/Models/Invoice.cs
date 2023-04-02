@@ -16,8 +16,6 @@ namespace FurnitureStore.Models
 
         public int id { get; set; }
 
-        public int customer_id { get; set; }
-
         public DateTime OrderDate { get; set; }
 
         public DateTime? DeliveryDate { get; set; }
@@ -26,11 +24,9 @@ namespace FurnitureStore.Models
 
         public bool isPaid { get; set; }
 
-        public int employee_id { get; set; }
-
-        public virtual Customer Customer { get; set; }
-
-        public virtual Employee Employee { get; set; }
+        [Required]
+        [StringLength(128)]
+        public string customer_id { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
