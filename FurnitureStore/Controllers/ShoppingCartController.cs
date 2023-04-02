@@ -1,7 +1,11 @@
 ﻿using FurnitureStore.Models;
 using FurnitureStore.ViewModels;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 
 namespace FurnitureStore.Controllers
@@ -80,5 +84,76 @@ namespace FurnitureStore.Controllers
 
         }
 
+
+        public ActionResult RemoveCartItem(int? id)
+        {
+            List<CartItem> lstShoppingCart = GetShoppingCartFromSession();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            CartItem cartItem = lstShoppingCart.FirstOrDefault(m => m.Id == id);
+            if (cartItem == null)
+            {
+                return HttpNotFound();
+            }
+            lstShoppingCart.Remove(cartItem);
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Order(string delivery_address, decimal shippingCost)
+        {
+            string currentUserId = User.Identity.GetUserId();
+            int newOrderNo;
+            using (DbContextTransaction transaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    Invoice objInvoices = new Invoice()
+                    {
+                        OrderDate = DateTime.Now,
+                        DeliveryDate = null,
+                        isComplete = false,
+                        isPaid = false,
+                        customer_id = currentUserId
+                    };
+                    context.Invoices.Add(objInvoices);
+                    context.SaveChanges();
+                    newOrderNo = context.Database.SqlQuery<int>("SELECT TOP 1 id FROM [Invoices] ORDER BY id DESC").FirstOrDefault();
+
+                    List<CartItem> carts = GetShoppingCartFromSession();
+                    foreach (var item in carts)
+                    {
+                        InvoiceDetail invoiceDetail = new InvoiceDetail()
+                        {
+                            invoice_id = newOrderNo,
+                            product_id = item.Id,
+                            delivery_address = delivery_address,
+                            quantity = item.Quatity,
+                            price = item.Price,
+                            //Total là phí ship của đơn hàng dô đặt nhằm tên trường
+                            Total = shippingCost
+
+                        };
+                        context.InvoiceDetails.Add(invoiceDetail);
+                        context.SaveChanges();
+                    }
+                    transaction.Commit();
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    return Content("Order Placement Error!" + e.Message);
+                }
+            }
+            return RedirectToAction("ConfirmOrder", "ShoppingCart", new { newOrderNo = newOrderNo });
+
+        }
+        public ActionResult ConfirmOrder(int newOrderNo)
+        {
+
+            ViewBag.newOrderNo = newOrderNo.ToString();
+            return View();
+        }
     }
 }

@@ -18,14 +18,12 @@ namespace FurnitureStore.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int product_id { get; set; }
 
+        public string delivery_address { get; set; }
+
         public int quantity { get; set; }
 
         public decimal price { get; set; }
 
         public decimal Total { get; set; }
-
-        public virtual Invoice Invoice { get; set; }
-
-        public virtual Product Product { get; set; }
     }
 }

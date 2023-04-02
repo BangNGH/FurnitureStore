@@ -8,12 +8,6 @@ namespace FurnitureStore.Models
 
     public partial class Product
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Product()
-        {
-            InvoiceDetails = new HashSet<InvoiceDetail>();
-        }
-
         public int id { get; set; }
 
         [Required]
@@ -31,9 +25,6 @@ namespace FurnitureStore.Models
         public string Image { get; set; }
 
         public int category_id { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
 
         public virtual ProductCategory ProductCategory { get; set; }
     }

@@ -8,7 +8,7 @@
         <div class="col-md-8 cart">
             <div class="title">
                 <div class="row">
-                    <div class="col"><h4><b>Shopping Cart</b></h4></div>
+                    <div class="col"><h4 style="margin-top:20px;"><b>Place An Order</b></h4></div>
 
                 </div>
             </div>
@@ -32,11 +32,12 @@
                                 </div>
                             }
                         </div>
-                        <div class="col-md-2">@item.Money.ToString("N0") đ<span class="close">&#10005;</span></div>
+                        <div class="col-md-2">
+                            @item.Money.ToString("N0") đ <span class="close" onclick="RemoveItem(@item.Id)" >&#10005;</span>
+                        </div>
                     </div>
                 </div>
             }
-
             <div class="back-to-shop">
                 <span>&leftarrow;</span>
                 @Html.ActionLink("Back to shop", "GetAllProducts", "FurnitureStore", null, new { @class = "text-muted" })
@@ -45,68 +46,77 @@
 
 
         </div>
-        @*  <div class="col-md-4 summary">
+        <div class="col-md-4 summary">
             <div><h5><b>Summary</b></h5></div>
             <hr>
             <div class="row">
                 <div class="col" style="padding-left:0;">@ViewBag.Quatity ITEMS</div>
                 <div class="col text-right">@ViewBag.Total.ToString("N0") đ</div>
             </div>
-            <form>
+            @using (Html.BeginForm("Order", "ShoppingCart", FormMethod.Post))
+            {
                 <p>SHIPPING</p>
-                <select>
-                    <option class="text-muted">Standard-Delivery(≤5km) - 110.000đ</option>
-                    <option class="text-muted">Standard-Delivery(5-20km) - 170.000đ</option>
-                    <option class="text-muted">Standard-Delivery(≥20km) - 350.000đ</option>
-                    <option class="text-muted">Qucik-Delivery(20-50km)- 599.000đ</option>
+                <select id="shippingSelect" name="shippingCost" onchange="setShippingCost(this.value); enableCheckoutButton();">
+                    <option value="" selected disabled>Select an option here</option>
+                    <option value="110000" class="text-muted">Standard-Delivery(≤5km) - 110.000đ</option>
+                    <option value="170000" class="text-muted">Standard-Delivery(5-20km) - 170.000đ</option>
+                    <option value="350000" class="text-muted">Standard-Delivery(≥20km) - 350.000đ</option>
+                    <option value="599000" class="text-muted">Qucik-Delivery(20-50km)- 599.000đ</option>
                 </select>
                 <p>
                     Delivery address
                 </p>
-                <input id="code" placeholder="Enter address">
-            </form>
+                <input id="code" name="delivery_address" placeholder="Enter address">
+                <button type="submit" id="checkoutButton" class="btn" disabled>CHECKOUT</button>
+            }
+
             <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                 <div class="col">TOTAL PRICE</div>
-                <div class="col text-right">[Money+ShippingCost]</div>
+                <div class="col text-right">[@ViewBag.Total.ToString("N0") đ + <span id="shippingCost">0</span>đ]</div>
             </div>
-            <button class="btn">CHECKOUT</button>
-        </div>*@
-    <div class="col-md-4 summary">
-        <div><h5><b>Summary</b></h5></div>
-        <hr>
-        <div class="row">
-            <div class="col" style="padding-left:0;">@ViewBag.Quatity ITEMS</div>
-            <div class="col text-right">@ViewBag.Total.ToString("N0") đ</div>
+            <div class="col text-right" style="font-size:20px; font-style:italic; color:orangered"> <span id="totalPrice">0</span>đ</div>
+
+
         </div>
-        <form>
-            <p>SHIPPING</p>
-            <select onchange="setShippingCost(this.value)">
-                <option value="110000" class="text-muted">Standard-Delivery(≤5km) - 110.000đ</option>
-                <option value="170000" class="text-muted">Standard-Delivery(5-20km) - 170.000đ</option>
-                <option value="350000" class="text-muted">Standard-Delivery(≥20km) - 350.000đ</option>
-                <option value="599000" class="text-muted">Qucik-Delivery(20-50km)- 599.000đ</option>
-            </select>
-            <p>
-                Delivery address
-            </p>
-            <input id="code" placeholder="Enter address">
-        </form>
-        <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-            <div class="col">TOTAL PRICE</div>
-            <div class="col text-right">[@ViewBag.Total.ToString("N0") đ + <span id="shippingCost">0</span>đ]</div>
-        </div>
-        <button class="btn" id="checkout-btn" disabled>CHECKOUT</button>
-    </div>
 
         <script>
-function setShippingCost(value) {
-  document.getElementById("shippingCost").innerHTML = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Format the value with commas as thousand separators
-}
+            function setShippingCost(value) {
+                document.getElementById("shippingCost").innerHTML = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+            function enableCheckoutButton() {
+                var shippingSelect = document.getElementById("shippingSelect");
+                var checkoutButton = document.getElementById("checkoutButton");
+                if (shippingSelect.value != "") {
+                    checkoutButton.removeAttribute("disabled");
+                } else {
+                    checkoutButton.setAttribute("disabled", "disabled");
+                }
+            }
+            function setShippingCost(value) {
+                 var shippingCost = parseFloat(value);
+                 document.getElementById("shippingCost").innerHTML = shippingCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+                  var totalPrice = parseFloat(@ViewBag.Total);
+                  totalPrice += shippingCost;
+                  document.getElementById("totalPrice").innerHTML = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+            document.getElementById("checkoutButton").addEventListener("click", function () {
+                var code = document.getElementById("code").value.trim();
+                if (code === "") {
+                    alert("Vui lòng nhập địa chỉ nhận hàng");
+                } else {
+                    window.location.href = "/ShoppingCart/Order";
+                }
+            });
+            function RemoveItem(Id) {
+                window.location.href = "/ShoppingCart/RemoveCartItem/"+Id;
+            }
+
+
         </script>
 
-    </div>
 
-</div>
+    </div>
 
 <style>
     body {
@@ -172,9 +182,13 @@ function setShippingCost(value) {
 
     .close {
         margin-left: auto;
-        font-size: 0.7rem;
+        font-size: 1rem;
     }
-
+    .close:hover {
+        padding:2px;
+        cursor:pointer;
+        color:red;
+    }
     img {
         width: 3.5rem;
     }
@@ -194,7 +208,7 @@ function setShippingCost(value) {
     form {
         padding: 2vh 0;
     }
-
+    
     select {
         border: 1px solid rgba(0, 0, 0, 0.137);
         padding: 1.5vh 1vh;

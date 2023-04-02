@@ -27,12 +27,6 @@ namespace FurnitureStore.Models
                 .Property(e => e.Total)
                 .HasPrecision(10, 2);
 
-            modelBuilder.Entity<Invoice>()
-                .HasMany(e => e.InvoiceDetails)
-                .WithRequired(e => e.Invoice)
-                .HasForeignKey(e => e.invoice_id)
-                .WillCascadeOnDelete(false);
-
             modelBuilder.Entity<ProductCategory>()
                 .HasMany(e => e.Products)
                 .WithRequired(e => e.ProductCategory)
@@ -42,12 +36,6 @@ namespace FurnitureStore.Models
             modelBuilder.Entity<Product>()
                 .Property(e => e.price)
                 .HasPrecision(10, 2);
-
-            modelBuilder.Entity<Product>()
-                .HasMany(e => e.InvoiceDetails)
-                .WithRequired(e => e.Product)
-                .HasForeignKey(e => e.product_id)
-                .WillCascadeOnDelete(false);
         }
     }
 }
