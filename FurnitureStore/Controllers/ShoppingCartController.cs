@@ -69,5 +69,16 @@ namespace FurnitureStore.Controllers
             return PartialView("CartSummary");
         }
 
+        public RedirectToRouteResult UpdateCart(int id, int txtQuantity)
+        {
+            var itemFind = GetShoppingCartFromSession().FirstOrDefault(m => m.Id == id);
+            if (itemFind != null)
+            {
+                itemFind.Quatity = txtQuantity;
+            }
+            return RedirectToAction("Index");
+
+        }
+
     }
 }

@@ -1,2 +1,5 @@
 ﻿
-<a href="@Url.Action("Index", "ShoppingCart")"><strong>Cart</strong> <span id="cart-status" class="badge">@ViewBag.CartCount</span></a>
+<a href="@Url.Action("Index", "ShoppingCart")" class="btn btn-default" style="background-color: #ffffff; color: #1fd778; border-radius:20px; margin-right:20px">
+    <span class="glyphicon glyphicon-shopping-cart"></span> <strong>Cart</strong>
+    <span id="cart-status" class="badge">(@ViewBag.CartCount)</span>
+</a>

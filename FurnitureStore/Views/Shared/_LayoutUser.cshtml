@@ -67,28 +67,32 @@
                             <a href="">
                                 <img src="~/Content/image/user.png" alt="">
                                 <span>
-                                    @Html.Partial("_LoginPartial")
+
                                     @*@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })*@
                                 </span>
                             </a>
 
                         </div>
                     </div>
-                    <div>
-                        <div class="custom_menu-btn ">
-                            <button>
-                                <span class=" s-1">
+                    <div class="user_option">
+                        @Html.Partial("_LoginPartial")
 
-                                </span>
-                                <span class="s-2">
-
-                                </span>
-                                <span class="s-3">
-
-                                </span>
-                            </button>
-                        </div>
                     </div>
+                        <div>
+                            <div class="custom_menu-btn ">
+                                <button>
+                                    <span class=" s-1">
+
+                                    </span>
+                                    <span class="s-2">
+
+                                    </span>
+                                    <span class="s-3">
+
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
 
                 </nav>
             </div>

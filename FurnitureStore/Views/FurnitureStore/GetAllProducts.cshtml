@@ -31,7 +31,7 @@
                 <div class="box">
                     <a href="@Url.Action("Details", "FurnitureStore", new { id = @item.id })">
                         <div class="new">
-                            <h5>View</h5>
+                            <h5 style="font-size:20px; font-style:italic;text-align:center;">Details</h5>
                         </div>
                         <div class="img-box">
                             <img src="~/Content/image/@item.Image" width="320" height="250">
@@ -41,6 +41,7 @@
                             <h6>@item.name</h6>
                         </div>
                     </a>
+                    @Html.ActionLink("Thêm vào giỏ hàng", "AddToCart", "ShoppingCart", new { id = @item.id }, new { @class = "btn btn-success" })
                 </div>
             }
 
