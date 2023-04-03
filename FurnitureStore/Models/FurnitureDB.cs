@@ -12,6 +12,7 @@ namespace FurnitureStore.Models
         {
         }
 
+        public virtual DbSet<ContactReceive> ContactReceives { get; set; }
         public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
         public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<ProductCategory> ProductCategories { get; set; }

@@ -81,7 +81,7 @@ namespace FurnitureStore.Controllers
 
                 if (roles.Contains("Admin"))
                 {
-                    return RedirectToAction("Index", "Products", new { area = "Admin" });
+                    return RedirectToAction("TotalRevenue", "InvoiceDetails", new { area = "Admin" });
                 }
             }
             switch (result)

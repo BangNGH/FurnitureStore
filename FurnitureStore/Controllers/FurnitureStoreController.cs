@@ -97,5 +97,27 @@ namespace FurnitureStore.Controllers
             }
             return HttpNotFound("Not found product!");
         }
+
+        public ActionResult SendContact(string name, string email, string phone, string message)
+        {
+            if (ModelState.IsValid)
+            {
+                ContactReceive sendContact = new ContactReceive();
+                sendContact.Name = name;
+                sendContact.Email = email;
+                sendContact.Phone = phone;
+                sendContact.Message = message;
+                context.ContactReceives.Add(sendContact);
+                context.SaveChanges();
+                return View();
+            }
+            else
+            {
+                return View("Index");
+            }
+        }
+
+
+
     }
 }

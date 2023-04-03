@@ -184,6 +184,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ContactReceivesController.cs" />
     <Compile Include="Areas\Admin\Controllers\InvoiceDetailsController.cs" />
     <Compile Include="Areas\Admin\Controllers\InvoicesController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductCategoriesController.cs" />
@@ -200,6 +201,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CartItem.cs" />
+    <Compile Include="Models\ContactReceive.cs" />
     <Compile Include="Models\FurnitureDB.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Invoice.cs" />
@@ -2152,6 +2154,11 @@
     <Content Include="Areas\Admin\Views\InvoiceDetails\TotalRevenue.cshtml" />
     <Content Include="Areas\Admin\Views\InvoiceDetails\BestSellingProducts.cshtml" />
     <Content Include="Areas\Admin\Views\Products\Search.cshtml" />
+    <Content Include="Areas\Admin\Views\ContactReceives\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\ContactReceives\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\ContactReceives\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\ContactReceives\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ContactReceives\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Chart.bundle.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -2170,6 +2177,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="template\FeedBack.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -2215,6 +2223,7 @@
     <Content Include="Views\ShoppingCart\CartSummary.cshtml" />
     <Content Include="Views\ShoppingCart\ConfirmOrder.cshtml" />
     <Content Include="Views\ShoppingCart\ConfirmPaymentClient.cshtml" />
+    <Content Include="Views\FurnitureStore\SendContact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
