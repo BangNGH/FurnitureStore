@@ -1,7 +1,4 @@
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
-using System.Linq;
 
 namespace FurnitureStore.Models
 {
@@ -13,10 +10,12 @@ namespace FurnitureStore.Models
         }
 
         public virtual DbSet<ContactReceive> ContactReceives { get; set; }
+        public virtual DbSet<feedback> feedbacks { get; set; }
         public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
         public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<ProductCategory> ProductCategories { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -37,6 +36,12 @@ namespace FurnitureStore.Models
             modelBuilder.Entity<Product>()
                 .Property(e => e.price)
                 .HasPrecision(10, 2);
+
+            modelBuilder.Entity<Product>()
+                .HasMany(e => e.feedbacks)
+                .WithRequired(e => e.Product)
+                .HasForeignKey(e => e.product_id)
+                .WillCascadeOnDelete(false);
         }
     }
 }

@@ -206,8 +206,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AspNetUser.cs" />
     <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\ContactReceive.cs" />
+    <Compile Include="Models\feedback.cs" />
     <Compile Include="Models\FurnitureDB.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Invoice.cs" />
@@ -2231,6 +2233,8 @@
     <Content Include="Views\ShoppingCart\ConfirmOrder.cshtml" />
     <Content Include="Views\ShoppingCart\ConfirmPaymentClient.cshtml" />
     <Content Include="Views\FurnitureStore\SendContact.cshtml" />
+    <Content Include="Views\FurnitureStore\GiveFeedback.cshtml" />
+    <Content Include="Views\FurnitureStore\SeeFeedback.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

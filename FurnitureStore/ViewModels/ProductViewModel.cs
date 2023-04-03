@@ -11,6 +11,7 @@ namespace FurnitureStore.ViewModels
         public IEnumerable<Product> Products { get; set; }
         public IEnumerable<ProductCategory> Categories { get; set; }
         public IEnumerable<CartItem> CartItems { get; set; }
+        public IEnumerable<feedback> product_feedback { get; set; }
         public IEnumerable<ProductRevenue> RevenueList { get; set; }
         public IPagedList<Product> pagedList { get; set; }
     }

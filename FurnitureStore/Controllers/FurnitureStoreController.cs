@@ -1,7 +1,11 @@
 ﻿using FurnitureStore.Models;
 using FurnitureStore.ViewModels;
+using Microsoft.AspNet.Identity;
 using PagedList;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -128,8 +132,62 @@ namespace FurnitureStore.Controllers
                 return View("Index");
             }
         }
+        public ActionResult GiveFeedback(int id)
+        {
+            var products = context.Products.ToList();
+
+            var viewModel = new ProductViewModel
+            {
+                Products = products,
+
+            };
+            ViewBag.ProductId = id.ToString();
+            return View(viewModel);
+        }
+
+        public ActionResult SaveFeedBack(int rating, string feedback)
+        {
+            var currentUserId = User.Identity.GetUserId();
+            var productId = int.Parse(Request.Form["productId"]);
+            var newFeedback = new feedback
+            {
+                userId = currentUserId,
+                product_id = productId,
+                rate = rating,
+                Message = feedback,
+            };
+            context.feedbacks.Add(newFeedback);
+            try
+            {
+                context.SaveChanges();
+                return RedirectToAction("Index", "FurnitureStore");
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var errors in ex.EntityValidationErrors)
+                {
+                    foreach (var error in errors.ValidationErrors)
+                    {
+                        // Hiển thị lỗi xác thực
+                        Debug.WriteLine("Property: " + error.PropertyName + " Error: " + error.ErrorMessage);
+                    }
+                }
+                // Không lưu và trả về một trang lỗi
+                return View("Error");
+            }
+
+
+        }
+
+        public ActionResult SeeFeedback(int id)
+        {
+            var feedback_product = context.feedbacks.Where(m => m.product_id == id).ToList();
+
+            return View(feedback_product);
+        }
 
 
 
     }
+
 }

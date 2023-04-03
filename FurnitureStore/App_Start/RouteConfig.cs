@@ -14,6 +14,7 @@ namespace FurnitureStore
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "FurnitureStore", action = "Index", id = UrlParameter.Optional }
             );
+
         }
     }
 }

@@ -1,0 +1,81 @@
+﻿@model FurnitureStore.ViewModels.ProductViewModel
+@{
+    ViewBag.Title = "GiveFeedback";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<section class="contact_section layout_padding">
+    <div class="container ">
+        <div class="heading_container">
+            <h2 class="">
+                Give feedback for this product
+            </h2>
+        </div>
+
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                @using (Html.BeginForm("SaveFeedBack", "FurnitureStore", FormMethod.Post, new { @class = "needs-validation", novalidate = "" }))
+                {
+                    <input type="hidden" name="productId" value="@ViewBag.ProductId" />
+                    <div class="form-grosafdup">
+                        <label class="form-label">Đánh giá:</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="rating" id="rating1" value="1" required>
+                            <label class="form-check-label" for="rating1">
+                                1SAO
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="rating" id="rating2" value="2" required>
+                            <label class="form-check-label" for="rating2">
+                                2SAO
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="rating" id="rating3" value="3" required>
+                            <label class="form-check-label" for="rating3">
+                                3SAO
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="rating" id="rating4" value="4" required>
+                            <label class="form-check-label" for="rating4">
+                                4SAO
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="rating" id="rating5" value="5" required>
+                            <label class="form-check-label" for="rating5">
+                                5SAO
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="feedback" class="form-label">Feedback:</label>
+                        <textarea class="form-control" id="feedback" name="feedback" rows="3" required></textarea>
+                        <div class="invalid-feedback">
+                            Vui lòng nhập feedback.
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">SEND</button>
+                    </div>
+                }
+
+
+            </div>
+            <div class="col-md-6">
+                <div class="map_container">
+                    <div class="map-responsive">
+                        <img alt="@Model.Products.FirstOrDefault().name" src="~/Content/image/@Model.Products.FirstOrDefault(m=>m.id == int.Parse( ViewBag.ProductId)).Image" class="img-fluid" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

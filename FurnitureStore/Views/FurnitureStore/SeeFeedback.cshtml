@@ -1,0 +1,19 @@
+﻿<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Số sao feedback</th>
+
+          
+            <th scope="col">Feedback</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.rate/5</td>
+                <td>@item.Message</td>
+            </tr>
+        }
+    </tbody>
+</table>
