@@ -1,4 +1,5 @@
 ﻿using FurnitureStore.Models;
+using PagedList;
 using System.Collections.Generic;
 
 namespace FurnitureStore.ViewModels
@@ -11,6 +12,7 @@ namespace FurnitureStore.ViewModels
         public IEnumerable<ProductCategory> Categories { get; set; }
         public IEnumerable<CartItem> CartItems { get; set; }
         public IEnumerable<ProductRevenue> RevenueList { get; set; }
+        public IPagedList<Product> pagedList { get; set; }
     }
     public class ProductRevenue
     {

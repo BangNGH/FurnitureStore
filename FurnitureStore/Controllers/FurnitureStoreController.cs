@@ -1,5 +1,6 @@
 ﻿using FurnitureStore.Models;
 using FurnitureStore.ViewModels;
+using PagedList;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -54,12 +55,17 @@ namespace FurnitureStore.Controllers
             return View("GetAllProducts", viewModel);
         }
 
-        public ActionResult GetAllProducts()
+        public ActionResult GetAllProducts(int? page)
         {
+            int pageSize = 4;
+            int pageIndex = page.HasValue ? page.Value : 1;
             var products = context.Products.ToList();
+            var pagedListProducts = products.ToPagedList(pageIndex, pageSize);
+            ViewBag.CurrentPage = pageIndex;
             var viewModel = new ProductViewModel
             {
-                Products = products
+                Products = products,
+                pagedList = pagedListProducts
             };
 
             return View(viewModel);
@@ -84,20 +90,26 @@ namespace FurnitureStore.Controllers
             return View(viewModel);
         }
 
-        public ActionResult Search(string searchString)
+        public ActionResult Search(string searchString, int? page)
         {
-            var rs = (from m in context.Products where m.name.Contains(searchString) select m);
-            var viewModel = new ProductViewModel
-            {
-                Products = rs
-            };
+            var rs = (from m in context.Products where m.name.Contains(searchString) || m.manufacturer.Contains(searchString) select m).ToList();
             if (rs.Count() > 0)
             {
+                int pageSize = 4;
+                int pageIndex = page.HasValue ? page.Value : 1;
+                var result = rs.ToPagedList(pageIndex, pageSize);
+                ViewBag.CurrentPage = pageIndex;
+                var viewModel = new ProductViewModel
+                {
+                    Products = rs,
+                    pagedList = result
+
+                };
+                ViewBag.CurrentPage = pageIndex;
                 return View("GetAllProducts", viewModel);
             }
             return HttpNotFound("Not found product!");
         }
-
         public ActionResult SendContact(string name, string email, string phone, string message)
         {
             if (ModelState.IsValid)

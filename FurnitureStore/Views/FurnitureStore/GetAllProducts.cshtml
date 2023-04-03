@@ -1,58 +1,71 @@
-﻿@model FurnitureStore.ViewModels.ProductViewModel
+﻿@using PagedList.Mvc;
+@model FurnitureStore.ViewModels.ProductViewModel
 @{
     ViewBag.Title = "Get All Products";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
-
-<section class="brand_section" style="margin:20px">
+<section class="brand_section">
     <div class="container">
-        <div class="heading_container" style="display: flex; justify-content: center;">
+        <div class="heading_container">
             @if (ViewBag.CategoryName != null)
             {
-                <h2>Tất Cả Sản Phẩm Loại @ViewBag.CategoryName</h2>
+                <h2 class="text-center">Tất Cả Sản Phẩm Loại @ViewBag.CategoryName</h2>
             }
             else
             {
-                <h2>Our Products</h2>
+                <h2 class="text-center">Our Products</h2>
             }
         </div>
-            @using (Html.BeginForm("Search", "FurnitureStore", FormMethod.Get))
-            {
-                <div style="margin:50px;">
-                    <input type="text" id="search" name="searchString" placeholder="Tìm kiếm" style="padding: 8px; background: #eee; border-radius: 4px 0 0 4px; border: none; outline: none;">
-                    <button style="background-color: #24d278; color: #fff; padding: 8px 16px; border-radius: 0 4px 4px 0; border: none; cursor: pointer;">Tìm kiếm</button>
+        @using (Html.BeginForm("Search", "FurnitureStore", FormMethod.Get))
+        {
+            <div class="input-group mb-3">
+                <input type="text" id="search" name="searchString" placeholder="Tìm kiếm" class="form-control">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
                 </div>
-
-            }
-
-        <div class="brand_container layout_padding2">
+            </div>
+        }
+        <div class="row">
             @foreach (var item in Model.Products)
             {
-                <div class="box">
-                    <a href="@Url.Action("Details", "FurnitureStore", new { id = @item.id })">
-                        <div class="new">
-                            <h5 style="font-size:20px; font-style:italic;text-align:center;">Details</h5>
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <a href="@Url.Action("Details", "FurnitureStore", new { id = @item.id })">
+                            <img class="card-img-top" src="~/Content/image/@item.Image" alt="@item.name" style="height: 225px; width: 100%; display: block;">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">@item.name</h5>
+                            <p class="card-text">@item.price.ToString("N0") đ</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    @Html.ActionLink("Thêm vào giỏ hàng", "AddToCart", "ShoppingCart", new { id = @item.id }, new { @class = "btn btn-sm btn-outline-success" })
+                                </div>
+                                <small class="text-muted">@Html.ActionLink("Details", "Details", "FurnitureStore", new { id = @item.id }, new { @class = "btn btn-sm btn-outline-primary" })</small>
+                            </div>
                         </div>
-                        <div class="img-box">
-                            <img src="~/Content/image/@item.Image" width="320" height="250">
-                        </div>
-                        <div class="detail-box">
-                            <h6 class="price" style="margin:10px">@item.price.ToString("N0") đ</h6>
-                            <h6>@item.name</h6>
-                        </div>
-                    </a>
-                    @Html.ActionLink("Thêm vào giỏ hàng", "AddToCart", "ShoppingCart", new { id = @item.id }, new { @class = "btn btn-success" })
+                    </div>
                 </div>
             }
+        </div>
+        <div class="d-flex justify-content-between">
+            @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-secondary" })
+            @if (ViewBag.CategoryName != null)
+            {
+                @Html.ActionLink("See All", "GetAllProducts", null, new { @class = "btn btn-primary" })
+            }
+        </div>
+        <div class="row justify-content-center">
+            @Html.PagedListPager(Model.pagedList, page => Url.Action("Index", new { page }), new PagedListRenderOptions
+  {
+      DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
+      DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded,
+      DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded,
+      DisplayLinkToNextPage = PagedListDisplayMode.IfNeeded,
+      DisplayLinkToIndividualPages = true,
+      // other options...
+  })
 
 
         </div>
-        @Html.ActionLink("Back", "Index", null, new { @class = "brand-btn", style = "color: white; margin-right:20px" })
-        @if (ViewBag.CategoryName != null)
-        {
-            @Html.ActionLink("See All", "GetAllProducts", null, new { @class = "brand-btn" })
-        }
-
-
     </div>
 </section>
