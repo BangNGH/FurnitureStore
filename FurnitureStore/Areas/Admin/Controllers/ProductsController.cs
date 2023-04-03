@@ -118,6 +118,17 @@ namespace FurnitureStore.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Search(string searchString)
+        {
+            var rs1 = (from m in db.Products where m.name.Contains(searchString) || m.manufacturer.Contains(searchString) select m);
+
+
+            if (rs1.Count() > 0)
+            {
+                return View("Index", rs1);
+            }
+            return HttpNotFound("Not found!");
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

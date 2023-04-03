@@ -1,4 +1,6 @@
 ﻿using FurnitureStore.Models;
+using FurnitureStore.ViewModels;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -124,24 +126,75 @@ namespace FurnitureStore.Areas.Admin.Controllers
         {
             decimal totalRevenue = 0;
             var invoiceDetails = db.InvoiceDetails.ToList();
+            var invoices = from invoice in db.Invoices
+                           where invoice.DeliveryDate == null
+                           select invoice;
             foreach (var invoice_details in invoiceDetails)
             {
                 totalRevenue += invoice_details.price;
             }
             ViewBag.TotalRevenue = ((long)totalRevenue).ToString("N0");
+            ViewBag.Pending = invoices.Count();
             return View();
         }
 
-        /*  public ActionResult BestSellingProducts()
-          {
-              // Lấy danh sách sản phẩm bán chạy
-              var bestSellingProducts = db.InvoiceDetails.OrderByDescending(p => p.quantity).Take(5).ToList();
+
+        public ActionResult BestSellingProducts()
+        {
+            // Lấy danh sách id của những sản phẩm bán chạy
+            var bestSellingProductsId = db.InvoiceDetails
+                .OrderByDescending(p => p.quantity)
+                .Take(5)
+                .Select(p => p.product_id)
+                .ToList();
+
+            var revenueList = db.InvoiceDetails
+    .Where(p => bestSellingProductsId.Contains(p.product_id))
+    .GroupBy(p => p.product_id)
+    .Select(g => new
+    {
+        ProductId = g.Key,
+        Revenue = g.Sum(p => p.price)
+    })
+    .ToList();
+
+            var revenueViewModelList = new List<ProductRevenue>();
+            foreach (var revenue in revenueList)
+            {
+                revenueViewModelList.Add(new ProductRevenue
+                {
+                    ProductId = revenue.ProductId,
+                    Revenue = revenue.Revenue
+                });
+            }
 
 
-              // Trả về view hiển thị danh sách sản phẩm
-              return View(bestSellingProducts);
-          }*/
+            var productRevenueList = new List<ProductRevenue>();
+            foreach (var item in revenueList)
+            {
+                productRevenueList.Add(new ProductRevenue
+                {
+                    ProductId = item.ProductId,
+                    Revenue = item.Revenue
+                });
+            }
 
+
+            // Tìm những sản phẩm trong bảng Product có id nằm trong danh sách bestSellingProductsId để lưu vào biến bestSellingProducts
+            var bestSellingProducts = db.Products
+                .Where(p => bestSellingProductsId.Contains(p.id))
+                .ToList();
+
+
+            var viewModel = new ProductViewModel
+            {
+                Products = bestSellingProducts,
+                RevenueList = revenueViewModelList
+            };
+
+            // Trả về view hiển thị danh sách sản phẩm
+            return View(viewModel);
+        }
 
     }
 }

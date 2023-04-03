@@ -1,0 +1,35 @@
+﻿@model FurnitureStore.ViewModels.ProductViewModel
+
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/_AdminLayout.cshtml";
+}
+
+<h2>Search Results</h2>
+
+@if (Model.Products.Count() > 0)
+{
+    <h3>Products</h3>
+    <ul>
+        @foreach (var product in Model.Products)
+        {
+            <li>@product.name - @product.manufacturer</li>
+        }
+    </ul>
+}
+
+@if (Model.Categories.Count() > 0)
+{
+    <h3>Categories</h3>
+    <ul>
+        @foreach (var category in Model.Categories)
+        {
+            <li>@category.name</li>
+        }
+    </ul>
+}
+
+@if (Model.Products.Count() == 0 && Model.Categories.Count() == 0)
+{
+    <p>No results found.</p>
+}

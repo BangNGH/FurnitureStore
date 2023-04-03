@@ -2151,6 +2151,7 @@
     <Content Include="Areas\Admin\Views\InvoiceDetails\Index.cshtml" />
     <Content Include="Areas\Admin\Views\InvoiceDetails\TotalRevenue.cshtml" />
     <Content Include="Areas\Admin\Views\InvoiceDetails\BestSellingProducts.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Search.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Chart.bundle.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

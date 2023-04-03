@@ -1,29 +1,56 @@
-﻿@using FurnitureStore.Models;
-@model List<Product>
-
+﻿@model FurnitureStore.ViewModels.ProductViewModel
 @{
     ViewBag.Title = "BestSellingProducts";
     Layout = "~/Views/_AdminLayout.cshtml";
 }
+<style>
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+    }
 
+    .card {
+        flex: 1 1 auto;
+        margin: 10px;
+    }
 
-<div class="container">
-    <h2>Best Selling Products</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Product Name</th>
-                <th>Quantity Sold</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var product in Model)
+</style>
+<section class="brand_section" style="margin: 20px">
+    <div class="container">
+        <div class="heading_container text-center">
+            <h2 class=" font-weight-bold text-gray-900">Best-Selling Products</h2>
+        </div>
+        <div class="row">
+            @foreach (var item in Model.Products)
             {
-                <tr>
-                    <td>@product.Name</td>
-                    <td>@product.QuantitySold</td>
-                </tr>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="~/Content/image/@item.Image" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.name</h5>
+                            <p class="card-text">@item.price.ToString("N0") đ</p>
+                            <a href="@Url.Action("Details", "FurnitureStore", new { area = "", id = item.id })" class="btn btn-primary">Details</a>
+                            <p class="card-text mt-3">
+                                <strong>Doanh số bán được:</strong>
+                                @foreach (var revenue in Model.RevenueList)
+                                {
+                                    if (item.id == revenue.ProductId)
+                                    {
+                                        <span>@revenue.Revenue.ToString("N0") đ</span>
+                                    }
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
             }
-        </tbody>
-    </table>
-</div>
+        </div>
+        <div class="text-center mt-3">
+            @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-secondary mr-3" })
+            @if (ViewBag.CategoryName != null)
+            {
+                @Html.ActionLink("See All", "GetAllProducts", null, new { @class = "btn btn-primary" })
+            }
+        </div>
+    </div>
+</section>

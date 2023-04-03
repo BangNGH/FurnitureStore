@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FurnitureStore.Models;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using FurnitureStore.Models;
 
 namespace FurnitureStore.Areas.Admin.Controllers
 {
@@ -18,6 +15,13 @@ namespace FurnitureStore.Areas.Admin.Controllers
         public ActionResult Index()
         {
             return View(db.Invoices.ToList());
+        }
+        public ActionResult PendingOrder()
+        {
+            var invoices = from invoice in db.Invoices
+                           where invoice.DeliveryDate == null
+                           select invoice;
+            return View("Index", invoices);
         }
 
         // GET: Admin/Invoices/Details/5
