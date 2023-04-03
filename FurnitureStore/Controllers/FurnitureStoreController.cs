@@ -114,6 +114,7 @@ namespace FurnitureStore.Controllers
             }
             return HttpNotFound("Not found product!");
         }
+        [HttpPost]
         public ActionResult SendContact(string name, string email, string phone, string message)
         {
             if (ModelState.IsValid)
@@ -129,6 +130,14 @@ namespace FurnitureStore.Controllers
             }
             else
             {
+                Debug.WriteLine("Validation errors:");
+                foreach (var state in ModelState)
+                {
+                    foreach (var error in state.Value.Errors)
+                    {
+                        Debug.WriteLine(error.ErrorMessage);
+                    }
+                }
                 return View("Index");
             }
         }
@@ -144,7 +153,7 @@ namespace FurnitureStore.Controllers
             ViewBag.ProductId = id.ToString();
             return View(viewModel);
         }
-
+        [HttpPost]
         public ActionResult SaveFeedBack(int rating, string feedback)
         {
             var currentUserId = User.Identity.GetUserId();
