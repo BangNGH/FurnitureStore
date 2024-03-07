@@ -13,7 +13,7 @@ namespace Common
             var fromEmailDisplayName = ConfigurationManager.AppSettings["FromEmailDisplayName"].ToString();
             var fromEmailPassword = ConfigurationManager.AppSettings["FromEmailPassword"].ToString();
             var smtpHost = ConfigurationManager.AppSettings["SMTPHost"].ToString();
-            var smtpPort = ConfigurationManager.AppSettings["SMTPort"].ToString();
+            var smtpPort = ConfigurationManager.AppSettings["SMTPPort"].ToString();
 
             bool enableSs1 = bool.Parse(ConfigurationManager.AppSettings["EnableSSL"].ToString());
             string body = content;

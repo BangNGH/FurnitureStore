@@ -141,6 +141,7 @@ namespace FurnitureStore.Controllers
                 return View("Index");
             }
         }
+        [Authorize]
         public ActionResult GiveFeedback(int id)
         {
             var products = context.Products.ToList();

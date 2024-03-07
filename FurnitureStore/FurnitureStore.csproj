@@ -1946,6 +1946,7 @@
     <Content Include="Content\image\search-icon.png" />
     <Content Include="Content\image\slider-img.png" />
     <Content Include="Content\image\Sofa.png" />
+    <Content Include="Content\image\sofa_moi.jpeg" />
     <Content Include="Content\image\t-1.jpg" />
     <Content Include="Content\image\t-2.jpg" />
     <Content Include="Content\image\t-3.jpg" />
@@ -2236,6 +2237,7 @@
     <Content Include="Views\FurnitureStore\SendContact.cshtml" />
     <Content Include="Views\FurnitureStore\GiveFeedback.cshtml" />
     <Content Include="Views\FurnitureStore\SeeFeedback.cshtml" />
+    <Content Include="Views\ShoppingCart\PayAfter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2253,6 +2255,12 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{DCDB138D-4ECD-42BE-B2DE-3174FB0BFE63}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

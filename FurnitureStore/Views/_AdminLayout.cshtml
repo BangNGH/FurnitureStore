@@ -93,6 +93,8 @@
             <div class="sidebar-card d-none d-lg-flex">
                 <img class="sidebar-card-illustration mb-2" src="~/Asset/Admin/img/undraw_rocket.svg" alt="...">
                 <p>Trang quản trị Admin</p>
+                @Html.ActionLink("Home", "Index", "FurnitureStore", new { area = "" }, new { @class = "btn btn-outline-success" })
+
             </div>
 
         </ul>
@@ -307,6 +309,10 @@
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
+
+
+                       
+
                             </div>
                         </li>
 

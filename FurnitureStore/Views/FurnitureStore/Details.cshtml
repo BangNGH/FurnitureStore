@@ -18,8 +18,6 @@
                 @Html.ActionLink("Thêm vào giỏ hàng", "AddToCart", "ShoppingCart", new { id = @Model.Products.FirstOrDefault().id }, new { @class = "btn btn-success" })
             </div>
             @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-primary" })
-            @Html.ActionLink("Give Feedback", "GiveFeedback", "FurnitureStore", new { id = @Model.Products.FirstOrDefault().id }, new { @class = "btn btn-primary" })
-            @Html.ActionLink("See Feedback", "SeeFeedback", "FurnitureStore", new { id = @Model.Products.FirstOrDefault().id }, new { @class = "btn btn-primary" })
         </div>
     </div>
 </div>

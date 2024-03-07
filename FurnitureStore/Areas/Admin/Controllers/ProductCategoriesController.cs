@@ -107,10 +107,35 @@ namespace FurnitureStore.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            ProductCategory productCategory = db.ProductCategories.Find(id);
-            db.ProductCategories.Remove(productCategory);
-            db.SaveChanges();
+
+            using (var dbContextTransaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    ProductCategory productCategory = db.ProductCategories.Find(id);
+                    if (productCategory == null)
+                    {
+                        return HttpNotFound();
+                    }
+
+                    var products = db.Products.Where(b => b.category_id == id).ToList();
+                    foreach (var pro in products)
+                    {
+                        db.Products.Remove(pro);
+                    }
+
+                    db.ProductCategories.Remove(productCategory);
+                    db.SaveChanges();
+                    dbContextTransaction.Commit();
+                }
+                catch
+                {
+                    dbContextTransaction.Rollback();
+                    // handle exception
+                }
+            }
             return RedirectToAction("Index");
+
         }
 
         protected override void Dispose(bool disposing)

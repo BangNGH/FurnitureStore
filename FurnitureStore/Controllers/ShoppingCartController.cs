@@ -85,6 +85,15 @@ namespace FurnitureStore.Controllers
 
         }
 
+        public ActionResult PayAfter(int id)
+        {
+            var order = context.Invoices.FirstOrDefault(p => p.id == id);
+            order.DeliveryDate = DateTime.Now.AddDays(10);
+            context.SaveChanges();
+            Session["ShoppingCart"] = null;
+            return View();
+        }
+
 
         public ActionResult RemoveCartItem(int? id)
         {
@@ -122,7 +131,6 @@ namespace FurnitureStore.Controllers
                     context.Invoices.Add(objInvoices);
                     context.SaveChanges();
                     newOrderNo = objInvoices.id;
-                    TempData["OrderNo"] = newOrderNo;
                     List<CartItem> carts = GetShoppingCartFromSession();
                     foreach (var item in carts)
                     {
@@ -167,15 +175,15 @@ namespace FurnitureStore.Controllers
             string partnerCode = "MOMOOJOI20210710";
             string accessKey = "iPXneGmrJH0G8FOP";
             string serectkey = "sFcbSGRSJjwGxwhhcEktCHWYUuTuPNDB";
-            string orderInfo = "test";
-            string returnUrl = "https://ebc9-115-73-216-91.ap.ngrok.io/ShoppingCart/ConfirmPaymentClient";
-            string notifyurl = "https://ebc9-115-73-216-91.ap.ngrok.io/ShoppingCart/ConfirmPaymentClient";
+            string orderInfo = "Thanh toán đơn hàng FurnitureStore";
+            string returnUrl = "https://385c-203-205-32-22.ap.ngrok.io/ShoppingCart/ConfirmPaymentClient";
+            string notifyurl = "https://385c-203-205-32-22.ap.ngrok.io/ShoppingCart/ConfirmPaymentClient";
             decimal price = lstShoppingCart.Sum(x => x.Price * x.Quatity);
             string amount = ((long)(price + shippingCost)).ToString();
             string orderid = DateTime.Now.ToString("yyyyMMddHHmmss") + new Random().Next(1000, 9999).ToString();
 
             string requestId = DateTime.Now.Ticks.ToString();
-            string extraData = "";
+            string extraData = id.ToString();
 
             //Before sign HMAC SHA256 signature
             string rawHash = "partnerCode=" +
@@ -224,7 +232,7 @@ namespace FurnitureStore.Controllers
             string rOrderId = result.orderId;
             string rErrorCode = result.errorCode; // = 0: thanh toán thành công
             Invoice order = new Invoice();
-            int orderNo = (int)TempData["OrderNo"];
+            int orderNo = int.Parse(result.extraData);
             order = context.Invoices.FirstOrDefault(p => p.id == orderNo);
             order.isPaid = true;
             order.DeliveryDate = DateTime.Now.AddDays(10);
@@ -233,7 +241,33 @@ namespace FurnitureStore.Controllers
             ViewBag.Message = rMessage;
             ViewBag.OrderId = rOrderId;
             ViewBag.ErrorCode = rErrorCode;
+            /*            var orderDetails = context.InvoiceDetails.FirstOrDefault(m => m.invoice_id == order.id);
+                        string content = System.IO.File.ReadAllText(Server.MapPath("~/template/FeedBack.html"));
+                        content = content.Replace("{{CustomerId}}", order.customer_id);
+                        content = content.Replace("{{OrderDate}}", order.OrderDate.ToString());
+                        content = content.Replace("{{DeliveryDate}}", order.DeliveryDate.ToString());
+                        string state;
+                        if (order.isPaid == false)
+                        {
+                            state = "Chưa thanh toán";
+                        }
+                        else state = "Đã thanh toán";
+                        content = content.Replace("{{ispaid}}", state);
+                        content = content.Replace("{{Address}}", orderDetails.delivery_address);
+
+                        var totalprice = context.InvoiceDetails.Where(m => m.invoice_id == order.id).Sum(m => m.price);
+
+
+                        content = content.Replace("{{Total}}", totalprice.ToString("N0"));
+                        var toEmail = ConfigurationManager.AppSettings["ToEmailAddress"].ToString();
+
+                        var userId = User.Identity.GetUserName();
+                        var emailUser = context.AspNetUsers.Where(m => m.Id == userId).Select(m => m.Email).FirstOrDefault();
+                        content = content.Replace("{{Email}}", emailUser);
+                        new MailHelper().SendMail(toEmail, "Đơn hàng mới từ FurnitureStore", content);
+                        new MailHelper().SendMail(emailUser, "Đơn hàng mới từ FurnitureStore", content);*/
             return View();
+
         }
 
     }
